@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KanBan</title>
+  </head>
+  <body>
+    <header>>_MEDLAQ777</header>
+
+    <main>
+      <div>
+        <h2>Tasks</h2>
+        <button>+ New Task</button>
+      </div>
+      <div>
+        <section>
+          <h3>To Do</h3>
+          <div>
+            <div id="todo-list"></div>
+          </div>
+        </section>
+
+        <section>
+          <h3>In Progress</h3>
+          <div>
+            <div id="in-progress-list"></div>
+          </div>
+        </section>
+
+        <section>
+          <h3>Done</h3>
+          <div>
+            <div id="done-list"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <section>
+      <h3>RESULTS:</h3>
+      <div>
+        <div id="done-list"></div>
+      </div>
+    </section>
+
+    <div id="modal-task">
+      <div>
+        <h3>Create Task</h3>
+        <form id="form-task">
+          <label>Title</label>
+          <input type="text" id="task-name" required />
+
+          <label>Description</label>
+          <textarea id="task-desc"></textarea>
+
+          <label>Status</label>
+          <select id="task-status">
+            <option value="todo">To Do</option>
+            <option value="in-progress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+
+          <label>Due Date</label>
+          <input type="date" id="task-due" />
+
+          <label>Priority</label>
+          <select id="task-priority">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+
+          <div>
+            <button type="button">Close</button>
+            <button type="submit">Save Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <footer>
+      <p>2024</p>
+    </footer>
+  </body>
+</html>
