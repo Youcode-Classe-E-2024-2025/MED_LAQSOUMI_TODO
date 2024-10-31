@@ -4,82 +4,122 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KanBan</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
-  <body>
-    <header>>_MEDLAQ777</header>
+  <body class="bg-gray-200 font-OSWALD flex flex-col min-h-screen">
+    <header class="bg-dkblue text-white p-3 text-center font-bold text-lg">
+      >_MEDLAQ777
+    </header>
 
-    <main>
-      <div>
-        <h2>Tasks</h2>
-        <button>+ New Task</button>
+    <main class="container mx-auto p-5 flex-grow">
+      <div class="flex justify-between mb-5">
+        <h2 class="text-xl font-semibold text-pink-900">Tasks Overview</h2>
+        <button
+          class="bg-pink-600 text-white px-3 py-2 rounded hover:bg-pink-800"
+        >
+          + New Task
+        </button>
       </div>
-      <div>
-        <section>
-          <h3>To Do</h3>
-          <div>
-            <div id="todo-list"></div>
+      <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6">
+        <section class="">
+          <h3 class="font-semibold text-lg mb-2 text-red-600">To Do</h3>
+          <div class="bg-dkblue p-8 rounded shadow-md">
+            <div id="todo-list" class="space-y-2"></div>
           </div>
         </section>
 
         <section>
-          <h3>In Progress</h3>
-          <div>
-            <div id="in-progress-list"></div>
+          <h3 class="font-semibold text-lg mb-2 text text-orange-500">
+            In Progress
+          </h3>
+          <div class="bg-dkblue p-8 rounded shadow-md">
+            <div id="in-progress-list" class="space-y-2"></div>
           </div>
         </section>
 
         <section>
-          <h3>Done</h3>
-          <div>
-            <div id="done-list"></div>
+          <h3 class="font-semibold text-lg mb-2 text-green-700">Done</h3>
+          <div class="bg-dkblue p-8 rounded shadow-md">
+            <div id="done-list" class="space-y-2"></div>
           </div>
         </section>
       </div>
     </main>
-
     <section>
-      <h3>RESULTS:</h3>
-      <div>
-        <div id="done-list"></div>
+      <h3 class="font-semibold text-lg mb-2 flex justify-center text-pink-900">
+        Task Result:
+      </h3>
+      <div class="bg-white p-4 rounded shadow-md">
+        <div id="done-list" class="space-y-2"></div>
       </div>
     </section>
-
-    <div id="modal-task">
-      <div>
-        <h3>Create Task</h3>
+    <div
+      id="modal-task"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+    >
+      <div
+        class="bg-dkblue text-gray-200 rounded-lg p-6 w-full max-w-sm shadow-md"
+      >
+        <h3 class="text-lg font-semibold mb-4 text-white flex justify-center">
+          Create Task
+        </h3>
         <form id="form-task">
-          <label>Title</label>
-          <input type="text" id="task-name" required />
+          <label class="block mb-2 text-white">Title</label>
+          <input
+            type="text"
+            id="task-name"
+            class="w-full p-2 border rounded mb-4"
+            required
+          />
 
-          <label>Description</label>
-          <textarea id="task-desc"></textarea>
+          <label class="block mb-2 text-white">Description</label>
+          <textarea
+            id="task-desc"
+            class="w-full p-2 border rounded mb-4"
+          ></textarea>
 
-          <label>Status</label>
-          <select id="task-status">
+          <label class="block mb-2 text-white">Status</label>
+          <select id="task-status" class="w-full p-2 border rounded mb-4">
             <option value="todo">To Do</option>
             <option value="in-progress">In Progress</option>
             <option value="done">Done</option>
           </select>
 
-          <label>Due Date</label>
-          <input type="date" id="task-due" />
+          <label class="block mb-2 text-white">Due Date</label>
+          <input
+            type="date"
+            id="task-due"
+            class="w-full p-2 border rounded mb-4"
+          />
 
-          <label>Priority</label>
-          <select id="task-priority">
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
+          <label class="block mb-2 text-white">Priority</label>
+          <select id="task-priority" class="w-full p-2 border rounded mb-4">
+            <option value="high" class="text-red-500">High</option>
+            <option value="medium" class="text-orange-500">Medium</option>
+            <option value="low" class="text-green-500">Low</option>
           </select>
 
-          <div>
-            <button type="button">Close</button>
-            <button type="submit">Save Task</button>
+          <div class="flex justify-between">
+            <button
+              type="button"
+              class="bg-pink-600 text-white px-3 py-2 rounded hover:bg-pink-800"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="bg-pink-600 text-white px-3 py-2 rounded hover:bg-pink-800"
+            >
+              Save Task
+            </button>
           </div>
         </form>
       </div>
     </div>
     <footer>
-      <p>2024</p>
+      <div class="bg-dkblue text-white p-3 text-center font-bold text-lg">
+        <p>© 2024 MEDLAQ777 Copyright . All Rights Reserved .</p>
+      </div>
     </footer>
   </body>
 </html>
