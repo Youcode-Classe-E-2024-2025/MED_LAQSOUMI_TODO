@@ -7,23 +7,39 @@
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body class="bg-gray-200 font-OSWALD flex flex-col min-h-screen">
-    <header class="bg-dkblue text-white p-3 text-center font-bold text-lg">
-      >_MEDLAQ777
+    <header
+      class="bg-dkblue text-white p-3 text-center lg:font-bold sm:font-semibold text-lg flex justify-center gap-1"
+    >
+      <p>>_</p>
+      <p>MEDLAQ777</p>
     </header>
 
     <main class="container mx-auto p-5 flex-grow">
-      <div class="flex justify-between mb-5">
-        <h2 class="text-xl font-semibold text-pink-900">Tasks Overview</h2>
-        <button
-          class="bg-pink-600 text-white px-3 py-2 rounded hover:bg-pink-800"
-        >
-          + New Task
-        </button>
-      </div>
-      <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6">
-        <section class="">
+      <section>
+        <div class="flex justify-between mb-5">
+          <button
+            class="bg-button text-white px-3 py-2 rounded hover:bg-buttonhover"
+          >
+            + New Task
+          </button>
+          <h2 class="text-xl font-semibold text-pink-900">Tasks Overview</h2>
+        </div>
+      </section>
+      <section>
+        <div class="flex justify-center mb-5 gap-2">
+          <h2 class="text-pink-900 p-1 text-xl font-semibold">Sort by :</h2>
+          <button class="bg-button text-white p-1 rounded hover:bg-buttonhover">
+            Date
+          </button>
+          <button class="bg-button text-white p-1 rounded hover:bg-buttonhover">
+            Status
+          </button>
+        </div>
+      </section>
+      <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-5">
+        <section>
           <h3 class="font-semibold text-lg mb-2 text-red-600">To Do</h3>
-          <div class="bg-dkblue p-8 rounded shadow-md">
+          <div class="bg-red-600 p-8 rounded shadow-md">
             <div id="todo-list" class="space-y-2"></div>
           </div>
         </section>
@@ -32,14 +48,14 @@
           <h3 class="font-semibold text-lg mb-2 text text-orange-500">
             In Progress
           </h3>
-          <div class="bg-dkblue p-8 rounded shadow-md">
+          <div class="bg-orange-500 p-8 rounded shadow-md">
             <div id="in-progress-list" class="space-y-2"></div>
           </div>
         </section>
 
         <section>
           <h3 class="font-semibold text-lg mb-2 text-green-700">Done</h3>
-          <div class="bg-dkblue p-8 rounded shadow-md">
+          <div class="bg-green-700 p-8 rounded shadow-md">
             <div id="done-list" class="space-y-2"></div>
           </div>
         </section>
@@ -118,7 +134,7 @@
     </div>
     <footer>
       <div class="bg-dkblue text-white p-3 text-center font-bold text-lg">
-        <p>© 2024 MEDLAQ777 Copyright . All Rights Reserved .</p>
+        <p>© 2024 MEDLAQ777 . All Rights Reserved .</p>
       </div>
     </footer>
   </body>
