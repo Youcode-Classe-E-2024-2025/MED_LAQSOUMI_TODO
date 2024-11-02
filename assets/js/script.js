@@ -1,5 +1,18 @@
-function showModal() {
-  document.getElementById("modal-task").classList.remove("hidden");
+function showModal(task = null) {
+  const modal = document.getElementById("modal-task");
+  modal.classList.remove("hidden");
+
+  if (task) {
+    document.getElementById("task-id").value = task.id;
+    document.getElementById("task-name").value = task.name;
+    document.getElementById("task-desc").value = task.description;
+    document.getElementById("task-status").value = task.status;
+    document.getElementById("task-due").value = task.dueDate;
+    document.getElementById("task-priority").value = task.priority;
+  } else {
+    document.getElementById("form-task").reset();
+    document.getElementById("task-id").value = "";
+  }
 }
 
 function closeModal() {
@@ -36,24 +49,35 @@ let tasks = [
 function saveTask(event) {
   event.preventDefault();
 
+  const taskId = document.getElementById("task-id").value;
   const taskName = document.getElementById("task-name").value;
   const taskDesc = document.getElementById("task-desc").value;
   const taskStatus = document.getElementById("task-status").value;
   const taskDue = document.getElementById("task-due").value;
   const taskPriority = document.getElementById("task-priority").value;
 
-  const task = {
-    id: Date.now(),
-    name: taskName,
-    description: taskDesc,
-    status: taskStatus,
-    dueDate: taskDue,
-    priority: taskPriority,
-  };
+  if (taskId) {
+    const task = tasks.find((t) => t.id == taskId);
+    if (task) {
+      task.name = taskName;
+      task.description = taskDesc;
+      task.status = taskStatus;
+      task.dueDate = taskDue;
+      task.priority = taskPriority;
+    }
+  } else {
+    const task = {
+      id: Date.now(),
+      name: taskName,
+      description: taskDesc,
+      status: taskStatus,
+      dueDate: taskDue,
+      priority: taskPriority,
+    };
+    tasks.push(task);
+  }
 
-  tasks.push(task);
   closeModal();
-  document.getElementById("form-task").reset();
   updateTaskLists();
   updateStatistics();
 }
@@ -92,7 +116,7 @@ function createTaskElement(task) {
       <p class="text-purple-700">Priority:</p>
       <p class="${getPriorityColor(task.priority)}">${task.priority}</p>
     </div>
-    <div class="flex justify-between">
+    <div class="flex justify-center gap-1">
       <label for="status-${task.id}" class="sr-only"></label>
       <select id="status-${task.id}" name="task-status" 
               onchange="changeStatus(${task.id}, this.value)" 
@@ -107,9 +131,12 @@ function createTaskElement(task) {
           task.status === "done" ? "selected" : ""
         }>Done</option>
       </select>
+      <button onclick="editTask(${
+        task.id
+      })" class="text-white text-sm border p-1 rounded shadow-md bg-button hover:bg-buttonhover">Edit</button>
       <button onclick="deleteTask(${
         task.id
-      })" class="text-white text-sm border p-2 rounded shadow-md bg-button hover:bg-buttonhover">Delete</button>
+      })" class="text-white text-sm border p-1 rounded shadow-md bg-button hover:bg-buttonhover">Delete</button>
     </div>
   `;
 
@@ -161,57 +188,12 @@ function updateStatistics() {
   `;
 }
 
-function updateSelectColor(select) {
-  select.className =
-    "w-full p-2 border rounded mb-4 " + getPriorityColor(select.value);
+function editTask(taskId) {
+  const task = tasks.find((task) => task.id === taskId);
+  if (task) {
+    showModal(task);
+  }
 }
-
-// Function to sort tasks by due date
-function sortByDate() {
-  tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
-  updateTaskLists(); // Update the task lists to reflect the sorted order
-}
-
-// Function to group tasks by status
-function sortByStatus() {
-  const groupedTasks = {
-    todo: [],
-    "in-progress": [],
-    done: [],
-  };
-
-  // Group tasks by status
-  tasks.forEach((task) => {
-    groupedTasks[task.status].push(task);
-  });
-
-  // Clear existing lists
-  const todoList = document.getElementById("todo-list");
-  const inProgressList = document.getElementById("in-progress-list");
-  const doneList = document.getElementById("done-list");
-
-  todoList.innerHTML = "";
-  inProgressList.innerHTML = "";
-  doneList.innerHTML = "";
-
-  // Append grouped tasks to their respective lists
-  groupedTasks.todo.forEach((task) =>
-    todoList.appendChild(createTaskElement(task))
-  );
-  groupedTasks["in-progress"].forEach((task) =>
-    inProgressList.appendChild(createTaskElement(task))
-  );
-  groupedTasks.done.forEach((task) =>
-    doneList.appendChild(createTaskElement(task))
-  );
-}
-
-// Existing functions like saveTask, updateTaskLists, createTaskElement, etc.
-
-document.addEventListener("DOMContentLoaded", () => {
-  updateTaskLists();
-  updateStatistics();
-});
 
 document.addEventListener("DOMContentLoaded", () => {
   updateTaskLists();

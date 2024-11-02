@@ -29,25 +29,6 @@
           <h2 class="text-xl font-semibold text-blue-700">Tasks Overview</h2>
         </div>
       </section>
-      <section>
-        <div class="flex justify-center mb-5 gap-2">
-          <h2 class="text-blue-700 p-1 text-xl font-semibold">Sort by :</h2>
-          <button
-            id="sort-date"
-            onclick="sortByDate()"
-            class="bg-button text-white p-1 rounded hover:bg-buttonhover shadow-sm"
-          >
-            Date
-          </button>
-          <button
-            id="sort-status"
-            onclick="sortBy()"
-            class="bg-button text-white p-1 rounded hover:bg-buttonhover shadow-sm"
-          >
-            Status
-          </button>
-        </div>
-      </section>
       <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-5">
         <section>
           <h3 class="font-semibold text-lg mb-2 text-red-600">To Do</h3>
@@ -92,6 +73,7 @@
           Create Task
         </h3>
         <form id="form-task" onsubmit="saveTask(event)">
+          <input type="hidden" id="task-id" />
           <label for="task-name" class="block mb-2 text-white">Title</label>
           <input
             type="text"
