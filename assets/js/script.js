@@ -6,7 +6,32 @@ function closeModal() {
   document.getElementById("modal-task").classList.add("hidden");
 }
 
-let tasks = [];
+let tasks = [
+  {
+    id: 1,
+    name: "Default Task 1",
+    description: "Description for task 1",
+    status: "todo",
+    dueDate: "2024-11-05",
+    priority: "P1",
+  },
+  {
+    id: 2,
+    name: "Default Task 2",
+    description: "Description for task 2",
+    status: "in-progress",
+    dueDate: "2024-11-10",
+    priority: "P2",
+  },
+  {
+    id: 3,
+    name: "Default Task 3",
+    description: "Description for task 3",
+    status: "done",
+    dueDate: "2024-11-15",
+    priority: "P3",
+  },
+];
 
 function saveTask(event) {
   event.preventDefault();
@@ -57,16 +82,19 @@ function updateTaskLists() {
 
 function createTaskElement(task) {
   const taskDiv = document.createElement("div");
-  taskDiv.className = `p-2 rounded shadow-lg text-white`;
+  taskDiv.className = "p-2 rounded shadow-lg text-purple-700 bg-white";
 
   taskDiv.innerHTML = `
-      <h4 class="font-semibold">${task.name}</h4>
+      <h4 class="font-semibold text-blue-700">${task.name}</h4>
       <p>Due: ${task.dueDate}</p>
-      <p>Priority: ${task.priority}</p>
+      <div class="flex justify-start gap-1">
+      <p class="text-purple-700">Priority:</p>
+      <p class="${getPriorityColor(task.priority)}">${task.priority}</p>
+       </div>
       <div class="flex justify-between">
           <select onchange="changeStatus(${
             task.id
-          }, this.value)" class="text-sm rounded border max-w-md text-black">
+          }, this.value)" class="text-sm rounded border max-w-md text-purple-700">
               <option value="todo" ${
                 task.status === "todo" ? "selected" : ""
               }>To Do</option>
@@ -79,26 +107,25 @@ function createTaskElement(task) {
           </select>
           <button onclick="deleteTask(${
             task.id
-          })" class="text-white text-sm border p-2 rounded shadow-md">Delete</button>
-          
+          })" class=" text-white text-sm border p-2 rounded shadow-md bg-dkpink">Delete</button>
       </div>
   `;
 
   return taskDiv;
 }
 
-// function getPriorityColor(priority) {
-//   switch (priority) {
-//     case "P1":
-//       return "bg-red-500";
-//     case "P2":
-//       return "bg-orange-500";
-//     case "P3":
-//       return "bg-green-500";
-//     default:
-//       return "bg-gray-500";
-//   }
-// }
+function getPriorityColor(priority) {
+  switch (priority) {
+    case "P1":
+      return "text-red-500";
+    case "P2":
+      return "text-orange-500";
+    case "P3":
+      return "text-green-500";
+    default:
+      return "text-gray-500";
+  }
+}
 
 function deleteTask(taskId) {
   tasks = tasks.filter((task) => task.id !== taskId);
@@ -136,3 +163,8 @@ function updateSelectColor(select) {
   select.className =
     "w-full p-2 border rounded mb-4 " + getPriorityColor(select.value);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateTaskLists();
+  updateStatistics();
+});
