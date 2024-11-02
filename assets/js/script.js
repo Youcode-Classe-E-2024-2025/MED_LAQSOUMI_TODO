@@ -83,32 +83,34 @@ function updateTaskLists() {
 function createTaskElement(task) {
   const taskDiv = document.createElement("div");
   taskDiv.className = "p-2 rounded shadow-lg text-purple-700 bg-white";
+  taskDiv.id = `task-${task.id}`;
 
   taskDiv.innerHTML = `
-      <h4 class="font-semibold text-blue-700">${task.name}</h4>
-      <p>Due: ${task.dueDate}</p>
-      <div class="flex justify-start gap-1">
+    <h4 class="font-semibold text-blue-700">${task.name}</h4>
+    <p>Due: ${task.dueDate}</p>
+    <div class="flex justify-start gap-1">
       <p class="text-purple-700">Priority:</p>
       <p class="${getPriorityColor(task.priority)}">${task.priority}</p>
-       </div>
-      <div class="flex justify-between">
-          <select onchange="changeStatus(${
-            task.id
-          }, this.value)" class="text-sm rounded border max-w-md text-purple-700">
-              <option value="todo" ${
-                task.status === "todo" ? "selected" : ""
-              }>To Do</option>
-              <option value="in-progress" ${
-                task.status === "in-progress" ? "selected" : ""
-              }>In Progress</option>
-              <option value="done" ${
-                task.status === "done" ? "selected" : ""
-              }>Done</option>
-          </select>
-          <button onclick="deleteTask(${
-            task.id
-          })" class=" text-white text-sm border p-2 rounded shadow-md bg-dkpink">Delete</button>
-      </div>
+    </div>
+    <div class="flex justify-between">
+      <label for="status-${task.id}" class="sr-only"></label>
+      <select id="status-${task.id}" name="task-status" 
+              onchange="changeStatus(${task.id}, this.value)" 
+              class="text-sm rounded border max-w-md text-purple-700">
+        <option value="todo" ${
+          task.status === "todo" ? "selected" : ""
+        }>To Do</option>
+        <option value="in-progress" ${
+          task.status === "in-progress" ? "selected" : ""
+        }>In Progress</option>
+        <option value="done" ${
+          task.status === "done" ? "selected" : ""
+        }>Done</option>
+      </select>
+      <button onclick="deleteTask(${
+        task.id
+      })" class="text-white text-sm border p-2 rounded shadow-md bg-button hover:bg-buttonhover">Delete</button>
+    </div>
   `;
 
   return taskDiv;
@@ -163,6 +165,53 @@ function updateSelectColor(select) {
   select.className =
     "w-full p-2 border rounded mb-4 " + getPriorityColor(select.value);
 }
+
+// Function to sort tasks by due date
+function sortByDate() {
+  tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+  updateTaskLists(); // Update the task lists to reflect the sorted order
+}
+
+// Function to group tasks by status
+function sortByStatus() {
+  const groupedTasks = {
+    todo: [],
+    "in-progress": [],
+    done: [],
+  };
+
+  // Group tasks by status
+  tasks.forEach((task) => {
+    groupedTasks[task.status].push(task);
+  });
+
+  // Clear existing lists
+  const todoList = document.getElementById("todo-list");
+  const inProgressList = document.getElementById("in-progress-list");
+  const doneList = document.getElementById("done-list");
+
+  todoList.innerHTML = "";
+  inProgressList.innerHTML = "";
+  doneList.innerHTML = "";
+
+  // Append grouped tasks to their respective lists
+  groupedTasks.todo.forEach((task) =>
+    todoList.appendChild(createTaskElement(task))
+  );
+  groupedTasks["in-progress"].forEach((task) =>
+    inProgressList.appendChild(createTaskElement(task))
+  );
+  groupedTasks.done.forEach((task) =>
+    doneList.appendChild(createTaskElement(task))
+  );
+}
+
+// Existing functions like saveTask, updateTaskLists, createTaskElement, etc.
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateTaskLists();
+  updateStatistics();
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   updateTaskLists();

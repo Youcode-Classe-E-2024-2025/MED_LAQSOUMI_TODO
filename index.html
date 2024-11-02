@@ -33,11 +33,15 @@
         <div class="flex justify-center mb-5 gap-2">
           <h2 class="text-blue-700 p-1 text-xl font-semibold">Sort by :</h2>
           <button
+            id="sort-date"
+            onclick="sortByDate()"
             class="bg-button text-white p-1 rounded hover:bg-buttonhover shadow-sm"
           >
             Date
           </button>
           <button
+            id="sort-status"
+            onclick="sortBy()"
             class="bg-button text-white p-1 rounded hover:bg-buttonhover shadow-sm"
           >
             Status
@@ -88,7 +92,7 @@
           Create Task
         </h3>
         <form id="form-task" onsubmit="saveTask(event)">
-          <label class="block mb-2 text-white">Title</label>
+          <label for="task-name" class="block mb-2 text-white">Title</label>
           <input
             type="text"
             id="task-name"
@@ -96,26 +100,30 @@
             required
           />
 
-          <label class="block mb-2 text-white">Description</label>
+          <label for="task-desc" class="block mb-2 text-white"
+            >Description</label
+          >
           <textarea
             id="task-desc"
             class="w-full p-2 border rounded mb-4"
           ></textarea>
 
-          <label class="block mb-2 text-white">Status</label>
+          <label for="task-status" class="block mb-2 text-white">Status</label>
           <select id="task-status" class="w-full p-2 border rounded mb-4">
             <option value="todo">To Do</option>
             <option value="in-progress">In Progress</option>
             <option value="done">Done</option>
           </select>
           <div class="flex justify-center flex-col max-w-screen-sm">
-            <label class="block mb-2 text-white">Due Date</label>
+            <label for="task-due" class="block mb-2 text-white">Due Date</label>
             <input
               type="date"
               id="task-due"
               class="w-full border rounded mb-4"
             />
-            <label class="block mb-2 text-white">Priority</label>
+            <label for="task-priority" class="block mb-2 text-white"
+              >Priority</label
+            >
             <select
               id="task-priority"
               class="w-full flex p-2 border rounded mb-4"
