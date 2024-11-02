@@ -1,18 +1,3 @@
-function updateSelectColor(select) {
-  select.classList.remove("text-red-500", "text-orange-500", "text-green-500");
-
-  const selectedOption = select.options[select.selectedIndex];
-  const colorClass = selectedOption.getAttribute("class");
-
-  if (colorClass) {
-    select.classList.add(colorClass);
-  }
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  updateSelectColor(document.getElementById("task-priority"));
-});
-
 function showModal() {
   document.getElementById("modal-task").classList.remove("hidden");
 }
@@ -21,45 +6,133 @@ function closeModal() {
   document.getElementById("modal-task").classList.add("hidden");
 }
 
+let tasks = [];
+
 function saveTask(event) {
   event.preventDefault();
 
-  const title = document.getElementById("task-name").value;
-  const desc = document.getElementById("task-desc").value;
-  const status = document.getElementById("task-status").value;
-  const dueDate = document.getElementById("task-due").value;
-  const priority = document.getElementById("task-priority").value;
+  const taskName = document.getElementById("task-name").value;
+  const taskDesc = document.getElementById("task-desc").value;
+  const taskStatus = document.getElementById("task-status").value;
+  const taskDue = document.getElementById("task-due").value;
+  const taskPriority = document.getElementById("task-priority").value;
 
-  addCard(title, desc, status, dueDate, priority);
+  const task = {
+    id: Date.now(),
+    name: taskName,
+    description: taskDesc,
+    status: taskStatus,
+    dueDate: taskDue,
+    priority: taskPriority,
+  };
 
-  document.getElementById("form-task").reset();
+  tasks.push(task);
   closeModal();
+  document.getElementById("form-task").reset();
+  updateTaskLists();
+  updateStatistics();
 }
 
-function addCard(title, desc, status, dueDate, priority) {
-  const column = document.getElementById(`${status}-list`);
+function updateTaskLists() {
+  const todoList = document.getElementById("todo-list");
+  const inProgressList = document.getElementById("in-progress-list");
+  const doneList = document.getElementById("done-list");
 
-  const card = document.createElement("div");
-  card.className = `p-4 border rounded shadow bg-white ${
-    priority === "P1"
-      ? "bg-red-600"
-      : priority === "P2"
-      ? "bg-orange-600"
-      : "bg-green-600"
-  }`;
+  todoList.innerHTML = "";
+  inProgressList.innerHTML = "";
+  doneList.innerHTML = "";
 
-  card.innerHTML = `
-    <h4 class="font-bold">${title}</h4>
-    <p class="text-sm">${desc}</p>
-    <p class="text-xs text-gray-600">Due: ${dueDate}</p>
-    <span class="inline-block px-2 py-1 text-xs font-semibold ${
-      priority === "P1"
-        ? "bg-red-500 text-white"
-        : priority === "P2"
-        ? "bg-orange-500 text-white"
-        : "bg-green-500 text-white"
-    } rounded-full">${priority}</span>
+  tasks.forEach((task) => {
+    const taskElement = createTaskElement(task);
+
+    if (task.status === "todo") {
+      todoList.appendChild(taskElement);
+    } else if (task.status === "in-progress") {
+      inProgressList.appendChild(taskElement);
+    } else if (task.status === "done") {
+      doneList.appendChild(taskElement);
+    }
+  });
+}
+
+function createTaskElement(task) {
+  const taskDiv = document.createElement("div");
+  taskDiv.className = `p-2 rounded shadow-lg text-white`;
+
+  taskDiv.innerHTML = `
+      <h4 class="font-semibold">${task.name}</h4>
+      <p>Due: ${task.dueDate}</p>
+      <p>Priority: ${task.priority}</p>
+      <div class="flex justify-between">
+          <select onchange="changeStatus(${
+            task.id
+          }, this.value)" class="text-sm rounded border max-w-md text-black">
+              <option value="todo" ${
+                task.status === "todo" ? "selected" : ""
+              }>To Do</option>
+              <option value="in-progress" ${
+                task.status === "in-progress" ? "selected" : ""
+              }>In Progress</option>
+              <option value="done" ${
+                task.status === "done" ? "selected" : ""
+              }>Done</option>
+          </select>
+          <button onclick="deleteTask(${
+            task.id
+          })" class="text-white text-sm border p-2 rounded shadow-md">Delete</button>
+          
+      </div>
   `;
 
-  column.appendChild(card);
+  return taskDiv;
+}
+
+// function getPriorityColor(priority) {
+//   switch (priority) {
+//     case "P1":
+//       return "bg-red-500";
+//     case "P2":
+//       return "bg-orange-500";
+//     case "P3":
+//       return "bg-green-500";
+//     default:
+//       return "bg-gray-500";
+//   }
+// }
+
+function deleteTask(taskId) {
+  tasks = tasks.filter((task) => task.id !== taskId);
+  updateTaskLists();
+  updateStatistics();
+}
+
+function changeStatus(taskId, newStatus) {
+  const task = tasks.find((task) => task.id === taskId);
+  if (task) {
+    task.status = newStatus;
+  }
+  updateTaskLists();
+  updateStatistics();
+}
+
+function updateStatistics() {
+  const todoCount = tasks.filter((task) => task.status === "todo").length;
+  const inProgressCount = tasks.filter(
+    (task) => task.status === "in-progress"
+  ).length;
+  const doneCount = tasks.filter((task) => task.status === "done").length;
+  const totalCount = tasks.length;
+
+  const statsElement = document.getElementById("tasks-list");
+  statsElement.innerHTML = `<div class="flex justify-center gap-5" >
+      <p class="font-semibold">To Do: ${todoCount}</p>
+      <p class="font-semibold">In Progress: ${inProgressCount}</p>
+      <p class="font-semibold">Done: ${doneCount}</p>
+      <p class="font-semibold">Total: ${totalCount}</p></div>
+  `;
+}
+
+function updateSelectColor(select) {
+  select.className =
+    "w-full p-2 border rounded mb-4 " + getPriorityColor(select.value);
 }

@@ -76,7 +76,7 @@
         Task Result:
       </h3>
       <div class="bg-white p-6 rounded shadow-md m-auto">
-        <div id="done-list" class="space-y-2"></div>
+        <div id="tasks-list" class="space-y-2 text-purple-700"></div>
       </div>
     </section>
     <div
@@ -115,12 +115,10 @@
               id="task-due"
               class="w-full border rounded mb-4"
             />
-
             <label class="block mb-2 text-white">Priority</label>
             <select
               id="task-priority"
               class="w-full flex p-2 border rounded mb-4"
-              onchange="updateSelectColor(this)"
             >
               <option id="p1" value="P1" class="text-red-500">P1</option>
               <option id="p2" value="P2" class="text-orange-500">P2</option>
