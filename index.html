@@ -79,6 +79,8 @@
             type="text"
             id="task-name"
             class="w-full p-2 border rounded mb-4"
+            minlength="5"
+            maxlength="20"
             required
           />
 
@@ -88,6 +90,9 @@
           <textarea
             id="task-desc"
             class="w-full p-2 border rounded mb-4"
+            minlength="5"
+            maxlength="300"
+            required
           ></textarea>
 
           <label for="task-status" class="block mb-2 text-white">Status</label>
@@ -102,6 +107,7 @@
               type="date"
               id="task-due"
               class="w-full border rounded mb-4"
+              required
             />
             <label for="task-priority" class="block mb-2 text-white"
               >Priority</label
