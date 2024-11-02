@@ -56,6 +56,21 @@ function saveTask(event) {
   const taskDue = document.getElementById("task-due").value;
   const taskPriority = document.getElementById("task-priority").value;
 
+  const nameRegex = /^[A-Za-z\s]+$/;
+  if (!nameRegex.test(taskName)) {
+    alert("Task name should contain only letters and spaces.");
+    return;
+  }
+
+  const dueDate = new Date(taskDue);
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+
+  if (dueDate <= currentDate) {
+    alert("Due date must be strictly in the future.");
+    return;
+  }
+
   if (taskId) {
     const task = tasks.find((t) => t.id == taskId);
     if (task) {
@@ -116,7 +131,7 @@ function createTaskElement(task) {
       <p class="text-purple-700">Priority:</p>
       <p class="${getPriorityColor(task.priority)}">${task.priority}</p>
     </div>
-    <div class="flex justify-center gap-1">
+    <div class="flex justify-between gap-1">
       <label for="status-${task.id}" class="sr-only"></label>
       <select id="status-${task.id}" name="task-status" 
               onchange="changeStatus(${task.id}, this.value)" 
@@ -133,10 +148,10 @@ function createTaskElement(task) {
       </select>
       <button onclick="editTask(${
         task.id
-      })" class="text-white text-sm border p-1 rounded shadow-md bg-button hover:bg-buttonhover">Edit</button>
+      })" class="text-white text-sm w-full border p-1 rounded shadow-md bg-button hover:bg-buttonhover">Edit</button>
       <button onclick="deleteTask(${
         task.id
-      })" class="text-white text-sm border p-1 rounded shadow-md bg-button hover:bg-buttonhover">Delete</button>
+      })" class="text-white text-sm w-full border p-1 rounded shadow-md bg-button hover:bg-buttonhover">Delete</button>
     </div>
   `;
 

@@ -946,10 +946,6 @@ select {
   gap: 0.25rem;
 }
 
-.gap-2 {
-  gap: 0.5rem;
-}
-
 .gap-5 {
   gap: 1.25rem;
 }
@@ -1014,10 +1010,6 @@ select {
 
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
-}
-
-.p-1 {
-  padding: 0.25rem;
 }
 
 .p-2 {
